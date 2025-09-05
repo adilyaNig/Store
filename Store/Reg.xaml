@@ -1,0 +1,48 @@
+﻿<Page x:Class="Store.Reg"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Store"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Reg">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Content="Назад" Background="White" FontWeight="Bold" Width="200" Height="50" Foreground="DeepPink" FontSize="25" Click="Button_Click" />
+        <Image Source="img\acc.png" Grid.Row="1" Grid.Column="1"/>
+        <TextBox Name="loginTb" Grid.Column="1" Grid.Row="3" Margin="10" FontSize="25"/>
+        <PasswordBox Name="passwordTb" Grid.Column="1" Grid.Row="5" Margin="10" FontSize="25"/>
+
+        <TextBox Name="nameTb" Grid.Column="0" Grid.Row="3" Margin="10" FontSize="25"/>
+        <TextBlock Text="Имя" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+        <TextBox Name="famTb" Grid.Column="0" Grid.Row="5" Margin="10" FontSize="25" />
+        <TextBlock Text="Фамилия" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+
+        <TextBox Name="numberTb" Grid.Column="2" Grid.Row="3" Margin="10" FontSize="25" />
+        <TextBlock Text="Номер телефона" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+        <TextBox Name="emailTb" Grid.Column="2" Grid.Row="5" Margin="10" FontSize="25" />
+        <TextBlock Text="Email" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+
+        <TextBlock Text="Логин" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+        <TextBlock Text="Пароль" Margin="6" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+
+        <Button Content="Зарегистрироваться" HorizontalAlignment="Center" Background="DeepPink"  FontWeight="Bold" Foreground="White" FontSize="25" Grid.Row="6" Grid.Column="1" Margin="10 20 10 5" Click="Reg_Button_Click"/>
+        <Frame x:Name="newFrame" NavigationUIVisibility="Hidden"/>
+    </Grid> 
+</Page>

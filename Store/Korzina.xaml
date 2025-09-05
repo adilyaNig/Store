@@ -1,0 +1,84 @@
+﻿<Page x:Class="Store.Korzina"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Store"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Korzina" >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <!-- Основная область для списка -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка для кнопки "Оплатить" и итоговой суммы -->
+        </Grid.RowDefinitions>
+
+
+        <!-- Основной список товаров -->
+        <ListView x:Name="cartListView" Height="Auto" ItemsSource="{Binding SelectedToys}" Grid.Row="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Grid с четырьмя колонками -->
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400"/>
+                            <!-- Колонка для изображения -->
+                            <ColumnDefinition Width="700"/>
+                            <!-- Колонка для описания -->
+                            <ColumnDefinition Width="200"/>
+                            <!-- Колонка для изменения количества -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Первая колонка: Изображение -->
+                        <Image Source="{Binding image}"
+                    Height="300"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Grid.Column="0"/>
+
+                        <!-- Вторая колонка: Название и комментарии -->
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch"
+                        Grid.Column="1" >
+                            <TextBlock Text="{Binding name}" FontSize="22"
+                            FontWeight="Bold"/>
+                            <TextBlock Text="{Binding comment}" Margin="0 10 0 0" FontSize="14" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <Button Content="Удалить" 
+                            Height="30" 
+                            Width="100" 
+                                FontSize="20" Foreground="black" FontWeight="Bold" Background="Lavender"
+                            Grid.Column="2" 
+                            HorizontalAlignment="Left" 
+                            Click="DeleteButton_Click" 
+                            CommandParameter="{Binding}"/>      
+                        <!-- Четвертая колонка: Цена -->
+                        <StackPanel  HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="3">
+                        <TextBlock Text="{Binding price}" FontSize="25" Foreground="Purple" FontWeight="Bold"/>
+                        <TextBlock Text=" руб." FontSize="20" TextWrapping="Wrap" Margin="0 5 0 0" Foreground="Purple" FontWeight="Bold"/>
+                           </StackPanel>
+                        </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Нижняя панель с кнопкой "Оплатить" и итоговой суммой -->
+        <Grid Grid.Row="1" >
+            
+
+            <!-- Кнопка "Оплатить" слева -->
+            
+            <Button Content="Оплатить" HorizontalAlignment="Center" Width="300" FontSize="25"  Height="50" Background="DeepPink" Foreground="White" Click="OplataButton_Click"/>
+
+            <!-- Итоговая сумма справа -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 150 0">
+                <TextBlock Text="{Binding TotalSum, StringFormat='Всего: {0}'}" FontSize="30" FontWeight="Bold" Foreground="Purple"/>
+                <TextBlock Text=" руб." FontSize="25" TextWrapping="Wrap" Margin="0 5 0 0" Foreground="Purple" FontWeight="Bold"/>
+            </StackPanel>
+           
+        </Grid>
+    </Grid>
+</Page>

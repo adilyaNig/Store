@@ -1,0 +1,101 @@
+﻿<Page x:Class="Store.Orders"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Store"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Orders">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <!-- Левый столбец (общий список заказов) -->
+            <ColumnDefinition Width="2*"/>
+            <!-- Правый столбец (детали заказа) -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая панель: общий список заказов -->
+        <ListView x:Name="ordersListView" ItemsSource="{Binding UserOrders}" Grid.Column="0" SelectionChanged="ordersListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Дата заказа" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding orderDate.Date, StringFormat='dd.MM.yyyy'}" FontSize="18"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Общая сумма" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding totalPrice}" FontSize="18"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Адрес доставки" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding deliveryAddress}" FontSize="18"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Правая панель: детали выбранного заказа -->
+        <Grid x:Name="detailsGrid" Grid.Column="1" Visibility="{Binding SelectedOrder, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Информация о заказе -->
+            <StackPanel Grid.Row="0" Margin="10">
+                <TextBlock Text="Дата заказа:" FontWeight="Bold" FontSize="20"/>
+                <TextBlock Text="{Binding SelectedOrder.orderDate.Date, StringFormat='dd.MM.yyyy'}" FontSize="18"/>
+                <TextBlock Text="Общая сумма:" FontWeight="Bold" FontSize="20"/>
+                <TextBlock Text="{Binding SelectedOrder.totalPrice}" FontSize="18"/>
+                <TextBlock Text="Адрес доставки:" FontWeight="Bold" FontSize="20"/>
+                <TextBlock Text="{Binding SelectedOrder.deliveryAddress}" FontSize="18"/>
+            </StackPanel>
+
+            <!-- Список товаров в заказе -->
+            <ListView x:Name="detailsListView" ItemsSource="{Binding SelectedOrderDetails}" Grid.Row="1">
+                <ListView.View>
+                    <GridView>
+
+                        <GridViewColumn Header="Товар" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Toy.name}" FontSize="18"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Кол-во" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding quantity}" FontSize="18"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Стоимость" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding subTotal}" FontSize="18"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>

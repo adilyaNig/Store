@@ -1,0 +1,130 @@
+﻿<Page x:Class="Store.Toy"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Toy">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Margin="10">
+                <TextBlock Text="Сортировка по цене" FontWeight="Bold" Foreground="Black" FontSize="14"/>
+                <ComboBox Name="sortComboBox"  Width="170" Height="25" FontSize="14"  SelectionChanged="SortComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Дешевле" Tag="ascending" FontSize="14"/>
+                    <ComboBoxItem Content="Дороже" Tag="descending" FontSize="14"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Margin="10">
+                <TextBlock Text="Сортировка по возрасту" FontWeight="Bold" Foreground="Black" FontSize="14"/>
+                <ComboBox Name="filterAgeComboBox" Width="170" Height="25" FontSize="14" SelectionChanged="FilterAgeComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все" Tag="all" FontSize="14"/>
+                    <ComboBoxItem Content="0-2" Tag="0-2" FontSize="14"/>
+                    <ComboBoxItem Content="3-5" Tag="3-5" FontSize="14"/>
+                    <ComboBoxItem Content="6-8" Tag="6-8" FontSize="14"/>
+                    <ComboBoxItem Content="9-11" Tag="9-11" FontSize="14"/>
+                    <ComboBoxItem Content="12+" Tag="12+" FontSize="14"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Margin="10">
+                <TextBlock Text="Выберите категорию" FontWeight="Bold" Foreground="Black" FontSize="14"/>
+                <ComboBox Name="categoryComboBox" Width="200" Height="25"  FontSize="14" SelectionChanged="CategoryComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все" Tag="all" FontSize="14"/>
+                    <ComboBoxItem Content="Конструкторы" Tag="Конструкторы" FontSize="14"/>
+                    <ComboBoxItem Content="Хобби и творчество" Tag="Хобби и творчество" FontSize="14"/>
+                    <ComboBoxItem Content="Куклы и аксессуары" Tag="Куклы и аксессуары" FontSize="14"/>
+                    <ComboBoxItem Content="Мягкие игрушки" Tag="Мягкие игрушки" FontSize="14"/>
+                    <ComboBoxItem Content="Игрушки для малышей" Tag="Игрушки для малышей" FontSize="14"/>
+                </ComboBox>
+            </StackPanel>
+            <Button Content="Сброс" Margin="10" Width="100"  Click="ResetButton_Click" FontSize="20"  Background="Lavender"/>
+            <TextBox Name="searchTextBox" Margin="10" MinWidth="200" TextChanged="SearchTextBox_TextChanged" FontSize="20"/>
+            <Image Source="img/search.png" Margin="0 15 15 15" MouseLeftButtonDown="Search_MouseLeftButtonDown" Width="20" Height="20"/>
+        </StackPanel>
+
+        <!-- Список товаров -->
+        <ListView x:Name="ToysLv" Grid.Row="1"
+              ItemsSource="{Binding toys}"
+              SelectionChanged="ToysLv_SelectionChanged">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="5" Padding="10" BorderBrush="Gray" BorderThickness="1" Width="400">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Source="{Binding image}" Height="300"/>
+                            <TextBlock Text="{Binding name}" TextWrapping="Wrap" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" TextAlignment="Center"/>
+                            <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock Text="{Binding price}"  FontSize="25" Foreground="Purple" FontWeight="Bold"/>
+                                <TextBlock Text=" руб." FontSize="20" TextWrapping="Wrap" Margin="0 5 0 0" Foreground="Purple" FontWeight="Bold"/>
+                            </StackPanel>
+                            <Button Content="В корзину" CommandParameter="{Binding}" Click="BuyButton_Click"  HorizontalAlignment="Center" Foreground="White" Background="DeepPink" FontSize="20" Width="Auto" Height="Auto" Margin="0 5 0 0"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Popup x:Name="popupDetail" Placement="Center" AllowsTransparency="True" IsOpen="False">
+            <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="Auto" Height="Auto" Margin="0 0 0 30">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Закрыть" Width="120" Height="40" FontSize="25" FontWeight="Bold" Foreground="White" Background="DarkRed" Click="ClosePopup_Click" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Width="Auto">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <!-- Увеличенное изображение слева -->
+                            <Image Source="{Binding SelectedItem.image, ElementName=ToysLv}" Grid.Column="0" Height="500" HorizontalAlignment="Center"/>
+
+                            <!-- Надписи справа -->
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="350">
+                                    <StackPanel Margin="20">
+                                        <TextBlock Text="{Binding SelectedItem.name, ElementName=ToysLv}" FontWeight="Bold" FontSize="25" TextWrapping="Wrap"/>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding SelectedItem.price, ElementName=ToysLv}" FontSize="30" Foreground="Purple" FontWeight="Bold" TextWrapping="Wrap"/>
+                                            <TextBlock Text=" руб." FontSize="25" TextWrapping="Wrap" Foreground="Purple" Margin="0 5 0 0" FontWeight="Bold" />
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding SelectedItem.comment, ElementName=ToysLv}" FontSize="20" TextWrapping="Wrap"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Возраст:" FontSize="20" TextWrapping="Wrap" Margin="0,0,5,0" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding SelectedItem.age, ElementName=ToysLv}" FontSize="20"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Страна:" FontSize="20" TextWrapping="Wrap" Margin="0,0,5,0" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding SelectedItem.country, ElementName=ToysLv}" FontSize="20"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Категория:" FontSize="20" TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding SelectedItem.category, ElementName=ToysLv}" FontSize="20"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ScrollViewer>
+
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Page>

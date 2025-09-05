@@ -1,0 +1,51 @@
+﻿<Window x:Class="Store.Oplata"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Store"
+        mc:Ignorable="d"
+        Title="Oplata" Height="250" Width="500">
+    
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Имя и фамилия -->
+            <Label Content="ФИО" Grid.Row="0" Grid.Column="0" FontSize="18"/>
+        <TextBox Name="fioTb" Grid.Row="0" Grid.Column="1" IsReadOnly="True" FontSize="18"/>
+            <!-- Данные загружаются автоматически -->
+
+            <!-- Номер телефона -->
+        <Label Content="Телефон" Grid.Row="1" Grid.Column="0" FontSize="18"/>
+        <TextBox Name="numberTb" Grid.Row="1" Grid.Column="1" IsReadOnly="True" FontSize="18"/>
+            <!-- Данные загружаются автоматически -->
+
+            <!-- Email -->
+        <Label Content="Email" Grid.Row="2" Grid.Column="0" FontSize="18"/>
+        <TextBox Name="emailTb" Grid.Row="2" Grid.Column="1" IsReadOnly="True" FontSize="18"/>
+            <!-- Данные загружаются автоматически -->
+
+            <!-- Адрес доставки -->
+        <Label Content="Адрес доставки" Grid.Row="3" Grid.Column="0" FontSize="18"/>
+        <TextBox Name="addressDelivery" Grid.Row="3" Grid.Column="1" FontSize="18"/>
+
+            <!-- Номер кредитной карты -->
+        <Label Content="Номер карты" Grid.Row="4" Grid.Column="0" FontSize="18"/>
+        <TextBox Name="cardNumber" Grid.Row="4" Grid.Column="1" MaxLength="16" FontSize="18"/>
+
+            <!-- Кнопка подтверждения оплаты -->
+        <Button Content="Подтвердить оплату" Background="MediumVioletRed" Foreground="White" Width="200" FontWeight="Bold" Grid.Row="5" Grid.ColumnSpan="2" Click="ConfirmPayment_Click" Margin="10" FontSize="18"/>
+        </Grid>
+</Window>
